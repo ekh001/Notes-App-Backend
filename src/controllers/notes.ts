@@ -59,4 +59,24 @@ export const createNote: RequestHandler<unknown, unknown, CreateNoteBody, unknow
     } catch (error) {
         next(error);
     }
+};
+
+interface UpdateNoteParams {
+    noteId: string,
+};
+
+interface UpdateNoteBody {
+    title?: string,
+    text?: string,
+}
+
+export const updateNote: RequestHandler<UpdateNoteParams, unknown, UpdateNoteBody, unknown> = async(req, res, next) => {
+    const noteId = req.params.noteId;
+    const newTitle = req.body.title;
+    const newText = req.body.text;
+    try {
+        
+    } catch (error) {
+        
+    }
 }
