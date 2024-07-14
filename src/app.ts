@@ -2,6 +2,7 @@ import "dotenv/config";
 
 import express, { NextFunction, Request, Response } from "express";
 import notesRoutes from './routes/notes';
+import userRoutes from "./routes/users";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
 
@@ -12,6 +13,8 @@ app.use(morgan("dev"));
 
 app.use(express.json());
 
+
+app.use("/api/users", userRoutes);
 app.use("/api/notes", notesRoutes);
 
 app.use((req, res, next) => {
