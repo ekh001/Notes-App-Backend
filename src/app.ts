@@ -5,6 +5,9 @@ import notesRoutes from './routes/notes';
 import userRoutes from "./routes/users";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
+import session from "express-session";
+
+import env from "./util/validateEnv";
 
 
 const app = express();
@@ -12,6 +15,10 @@ const app = express();
 app.use(morgan("dev"));
 
 app.use(express.json());
+
+app.use(session({
+    secret: env.SESSION_SECRET,
+})),
 
 
 app.use("/api/users", userRoutes);
