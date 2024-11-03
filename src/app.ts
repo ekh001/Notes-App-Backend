@@ -10,6 +10,7 @@ import session from "express-session";
 import env from "./util/validateEnv";
 
 import MongoStore from "connect-mongo";
+import { requiresAuth } from "./middleware/auth";
 
 
 const app = express();
@@ -33,7 +34,7 @@ app.use(session({
 
 
 app.use("/api/users", userRoutes);
-app.use("/api/notes", notesRoutes);
+app.use("/api/notes", requiresAuth, notesRoutes);
 
 app.use((req, res, next) => {
     next(createHttpError(404, "Endpoint not found"));
@@ -42,7 +43,7 @@ app.use((req, res, next) => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
-    let errorMessage = "An unknown error occurred. Check console log for more information.";
+    let errorMessage = "An unknown error occurred.";
     let statusCode = 500;
         if (isHttpError(error)) {
             statusCode = error.status;
